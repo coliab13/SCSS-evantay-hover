@@ -1,0 +1,78 @@
+$dark: #333;
+$linght: orange;
+$size: 1.5em;
+$angle: -170deg;
+$quantity: 12;
+
+@mixin center {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+body{
+    margin: 0;
+    background-color: $dark;
+    color: $linght; 
+}
+#fan {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    h2, p{
+        margin: 0;
+    }
+  
+    &:hover{
+        li{
+            @for $n from 1 through 12 {
+                &:nth-child(#{$n}){
+                    transform: rotate($angle * $n / $quantity); // -170deg * numarul de ordine / nuarul de patratele (12)  
+                    transition: 2s; 
+                }
+              }  
+        }
+    }
+    li{ 
+        // border: 1px solid red;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: $size;
+        padding: $size;
+        position: absolute;
+        background-color: $dark;
+        width: $size*27;
+        @include center;
+        height: $size*2;
+        border-radius: 100% $size*3 $size*3 100%;
+        transform-origin: left;  //punctul de initiere a rotarii este  din stinga elementului , nu din mijloc ca de obicei
+        
+        &::before{
+            content: "";
+            background-color: $dark;
+            border: 2px solid $dark;
+            border-radius: 100%;
+            padding: 7px;
+            position: absolute;
+            display: block;
+            width: 0.5em;
+            height: 0.5em;
+            left: -7px;
+            top: 2.4em;
+            
+        }
+
+        @for $n from 1 through 12 {
+        &:nth-child(#{$n}){
+            transition: 2s;
+            // transform: rotate($angle * $n / $quantity); // -170deg * numarul de ordine / nuarul de patratele (12)  
+         background-color: lighten($dark, $n * 5%);
+         color: lighten($linght, $n * 4%);
+         box-shadow: 0 0 $size*0.2 $size*0.1 lighten($linght, $n * 5%);
+         
+        }
+      }
+    } 
+}
